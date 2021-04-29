@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
 const AnyReactComponent = ({ text }) => <div style={{
@@ -64,16 +64,18 @@ function Header({data}) {
 
 export default function Layout() {
   const [data, setData] = React.useState();
-  React.useEffect(async () => {
-    try {
-      const res = await axios.get('https://us-central1-track-anton.cloudfunctions.net/widgets/where');
-      console.log(res);
-      setData(res.data);
-
-    } catch (e) {
-      console.error(e);
-    }
-  })
+  React.useEffect(() => {
+    setInterval(async() => {
+      try {
+        const res = await axios.get('https://us-central1-track-anton.cloudfunctions.net/widgets/where');
+        console.log(res);
+        setData(res.data);
+  
+      } catch (e) {
+        console.error(e);
+      }
+    }, [10000])
+  }, [])
   if (!data) return <span>loading...</span>
   return <div>
     <Header data={data}/>
