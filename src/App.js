@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
+import './App.css'
 const AnyReactComponent = ({ text }) => <div style={{
   fontSize: '1rem',
   color: '#ec8f58'
@@ -28,10 +29,6 @@ function Map({lat,lng}) {
     );
 }
 function Header({data}) {
-  const {
-    lat,lng,
-    properties: {speed}
-  } = data
   return <div style={{
     background: 'white',
     height: 72,
@@ -55,9 +52,9 @@ function Header({data}) {
       display: 'flex',
       flexDirection: 'column'
     }}>
-      <div>Lat: {lat} </div>
-      <div> Lng: {lng} </div>
-      <div> Speed: {speed}</div>
+      {data && <><div>Lat: {data.lat} </div>
+      <div> Lng: {data.lng} </div>
+      <div> Speed: {data.properties.speed}</div></>}
     </div>
   </div>
 }
@@ -76,9 +73,14 @@ export default function Layout() {
       }
     }, [10000])
   }, [])
-  if (!data) return <span>loading...</span>
   return <div>
     <Header data={data}/>
-    <Map lat={data.lat} lng={data.lng}/>
+    {!data && <div style={{margin: '130px auto', textAlign: 'center', width: '100%'}} >
+        Locating Antons Feet
+        <div class="App-logo" style={{
+          color: '#ec8f58'
+        }}>👣</div>
+      </div>}
+    {data && <Map lat={data.lat} lng={data.lng}/>}
   </div>
 }
