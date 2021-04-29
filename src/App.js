@@ -44,7 +44,7 @@ function Header({data}) {
     justifyContent: 'space-between',
     alignItems: 'center'
   }}>
-    <img style={{
+    <img alt="image of anton" style={{
       height: 69,
       width: 'auto'
     }} src="https://static.wixstatic.com/media/62f289_57b860ae0ae74a6aa6203a1956324267~mv2.png/v1/fill/w_242,h_144,al_c,q_85,usm_0.66_1.00_0.01/TBFD%20logo%2012%2002%2021.webp" />
