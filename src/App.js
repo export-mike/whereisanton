@@ -34,15 +34,13 @@ function Header({data}) {
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-device-width: 1224px)'
   })
-  const isBigScreen = useMediaQuery({ query: '(min-device-width: 1225px)' })
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   return <div style={{
     background: 'white',
     height: '20vh',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    ...(isBigScreen && {
+    ...(isDesktopOrLaptop && {
       justifyContent: 'space-between'
     }) || {}
   }}>
@@ -50,15 +48,15 @@ function Header({data}) {
       height: 69,
       width: 'auto'
     }} src="https://static.wixstatic.com/media/62f289_57b860ae0ae74a6aa6203a1956324267~mv2.png/v1/fill/w_242,h_144,al_c,q_85,usm_0.66_1.00_0.01/TBFD%20logo%2012%2002%2021.webp" />
-    {isBigScreen && <h1 style={{
+    {isDesktopOrLaptop && <h1 style={{
     }}>
       Where is Anton?
     </h1>}
-    {!isBigScreen && <h2 style={{
+    {!isDesktopOrLaptop && <h2 style={{
     }}>
       Where is Anton?
     </h2>}
-    {isBigScreen && <div style={{
+    {isDesktopOrLaptop && <div style={{
       display: 'flex',
       flexDirection: 'column'
     }}>
