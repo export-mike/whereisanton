@@ -2,6 +2,8 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
 import './App.css'
+import { useMediaQuery } from 'react-responsive'
+
 const AnyReactComponent = ({ text }) => <div style={{
   fontSize: '1rem',
   color: '#ec8f58'
@@ -10,7 +12,7 @@ const AnyReactComponent = ({ text }) => <div style={{
 function Map({lat,lng}) {
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
+      <div style={{ height: '80vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyDh0gDeOKl-jSlBNbmPELzhiGCdyOs_XSI" }}
           defaultCenter={{
@@ -29,33 +31,43 @@ function Map({lat,lng}) {
     );
 }
 function Header({data}) {
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-device-width: 1224px)'
+  })
+  const isBigScreen = useMediaQuery({ query: '(min-device-width: 1225px)' })
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   return <div style={{
     background: 'white',
-    height: 72,
+    height: '20vh',
     width: '100%',
-    position: 'absolute',
-    zIndex:1000,
-    top: 0,
-    left:0,
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    ...(isBigScreen && {
+      justifyContent: 'space-between'
+    }) || {}
   }}>
     <img alt="" style={{
       height: 69,
       width: 'auto'
     }} src="https://static.wixstatic.com/media/62f289_57b860ae0ae74a6aa6203a1956324267~mv2.png/v1/fill/w_242,h_144,al_c,q_85,usm_0.66_1.00_0.01/TBFD%20logo%2012%2002%2021.webp" />
-    <h1>
+    {isBigScreen && <h1 style={{
+    }}>
       Where is Anton?
-    </h1>
-    <div style={{
+    </h1>}
+    {!isBigScreen && <h2 style={{
+    }}>
+      Where is Anton?
+    </h2>}
+    {isBigScreen && <div style={{
       display: 'flex',
       flexDirection: 'column'
     }}>
       {data && <><div>Lat: {data.lat} </div>
       <div> Lng: {data.lng} </div>
-      <div> Speed: {data.properties.speed}</div></>}
-    </div>
+      <div> Speed: {data.properties.speed}</div>
+      <div> Last Updated: {new Date(data.properties.timestamp).toLocaleString()}</div>
+      </>}
+    </div>}
   </div>
 }
 
