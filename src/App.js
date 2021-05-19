@@ -6,13 +6,24 @@ import { useMediaQuery } from 'react-responsive'
 
 const AnyReactComponent = ({ text }) => <div style={{
   fontSize: '1rem',
-  color: '#ec8f58'
+  color: '#ec8f58',
+  transform: 'rotate(180deg)',
 }}>👣</div>;
+
+function inIFrame () {
+  try {
+      return window.self !== window.top;
+  } catch (e) {
+      return true;
+  }
+}
+
+const isInIframe = inIFrame();
 
 function Map({lat,lng}) {
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '80vh', width: '100%' }}>
+      <div style={isInIframe ? {height: window.innerHeight, width: window.innerWidth} :{ height: '80vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyDh0gDeOKl-jSlBNbmPELzhiGCdyOs_XSI" }}
           defaultCenter={{
@@ -84,7 +95,7 @@ export default function Layout() {
     }, [10000])
   }, [])
   return <div>
-    <Header data={data}/>
+    {!isInIframe && <Header data={data}/>}
     {!data && <div style={{margin: '130px auto', textAlign: 'center', width: '100%'}} >
         Locating Antons Feet
         <div class="App-logo" style={{
@@ -92,5 +103,11 @@ export default function Layout() {
         }}>👣</div>
       </div>}
     {data && <Map lat={data.lat} lng={data.lng}/>}
+    {data && <div class="stats">
+        <p>Last Updated at: {new Date(data.properties.timestamp).toLocaleString()}</p>
+        <p>Altitude: {data.properties.altitude}m</p>
+        {/* <span>Created by <a href="https://mikejam.es" target="_blank">Mike </a>
+        </span> */}
+      </div>}
   </div>
 }

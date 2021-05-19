@@ -42,3 +42,14 @@
     transform: rotate(360deg);
   }
 }
+
+
+.stats {
+  position: absolute;
+  z-index: 100;
+  background: white;
+  border-radius: 8px;
+  padding: 5px 10px;
+  bottom: 50px;
+  left: 10px;
+}
