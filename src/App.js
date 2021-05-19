@@ -41,7 +41,7 @@ function Map({lat,lng}) {
       </div>
     );
 }
-function Header({data}) {
+function Header() {
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-device-width: 1224px)'
   })
@@ -71,11 +71,6 @@ function Header({data}) {
       display: 'flex',
       flexDirection: 'column'
     }}>
-      {data && <><div>Lat: {data.lat} </div>
-      <div> Lng: {data.lng} </div>
-      <div> Speed: {data.properties.speed}</div>
-      <div> Last Updated: {new Date(data.properties.timestamp).toLocaleString()}</div>
-      </>}
     </div>}
   </div>
 }
