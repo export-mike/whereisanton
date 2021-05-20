@@ -77,6 +77,9 @@ function Header() {
 
 export default function Layout() {
   const [data, setData] = React.useState();
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-device-width: 1224px)'
+  })
   React.useEffect(() => {
     setInterval(async() => {
       try {
@@ -98,7 +101,16 @@ export default function Layout() {
         }}>👣</div>
       </div>}
     {data && <Map lat={data.lat} lng={data.lng}/>}
-    {data && <div class="stats">
+    {data && <div style={{
+      position: 'absolute',
+      zIndex: '100',
+      background: 'white',
+      borderRadius: '8px',
+      padding: '5px 10px',
+      bottom:'50px',
+      left: '10px',
+      fontSize: isDesktopOrLaptop ? '1rem' : '0.6rem'
+    }}>
         <p>Last Updated at: {new Date(data.properties.timestamp).toLocaleString()}</p>
         <p>Altitude: {data.properties.altitude}m</p>
         {/* <span>Created by <a href="https://mikejam.es" target="_blank">Mike </a>
